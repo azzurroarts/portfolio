@@ -36,7 +36,6 @@ function init() {
   });
 }
 
-// CSV to array
 function csvToArray(str, delimiter = ',') {
   const lines = str.trim().split('\n');
   const headers = lines[0].split(delimiter).map(h => h.trim());
@@ -48,11 +47,10 @@ function csvToArray(str, delimiter = ',') {
   });
 }
 
-// Render categories
 function renderCategories() {
   const categories = ['All', ...new Set(artData.map(a => a.Category))];
   const catContainer = document.getElementById('categories');
-  catContainer.innerHTML = ''; // clear previous buttons
+  catContainer.innerHTML = '';
 
   categories.forEach(cat => {
     const btn = document.createElement('button');
@@ -62,7 +60,6 @@ function renderCategories() {
   });
 }
 
-// Render gallery
 function renderGallery(filter, searchQuery = '') {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
@@ -79,7 +76,6 @@ function renderGallery(filter, searchQuery = '') {
       img.style.cursor = 'pointer';
       img.style.transition = 'transform 0.25s ease';
 
-      // Fullscreen click animation
       img.addEventListener('click', () => {
         const zoomImg = document.createElement('img');
         zoomImg.src = img.src;
