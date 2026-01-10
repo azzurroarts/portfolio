@@ -17,14 +17,14 @@ body {
   flex-direction: column;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto; /* scrollable */
+  overflow-y: auto;
   flex-shrink: 0;
 }
 
 .sidebar-title {
   font-weight: bold;
   font-size: 14px;
-  color: #888;
+  color: #888; 
   margin-bottom: 12px;
   text-transform: uppercase;
 }
@@ -62,12 +62,19 @@ body {
   color: #555;
 }
 
+/* NEW: active category highlight */
+#categories button.active {
+  color: #fff;
+  background-color: #000;
+  padding-left: 4px;
+}
+
 /* Main gallery container */
 #main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* prevent main from scrolling as a whole */
+  overflow: hidden;
 }
 
 /* Gallery */
@@ -77,7 +84,7 @@ body {
   flex-wrap: wrap;
   padding: 20px;
   gap: 24px;
-  overflow-y: auto; /* scrollable */
+  overflow-y: auto;
   justify-content: flex-start;
   align-content: flex-start;
   box-sizing: border-box;
@@ -120,11 +127,29 @@ body {
   will-change: transform;
 }
 
+/* NEW: floating category label at bottom */
+#floating-category {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 12px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10000;
+}
+
 /* ---------------- MOBILE RESPONSIVE ---------------- */
 @media (max-width: 768px) {
   body {
     flex-direction: column;
-    height: 100vh; /* ensure mobile fills viewport */
+    height: 100vh; 
   }
 
   #sidebar {
@@ -132,8 +157,8 @@ body {
     border-right: none;
     border-bottom: 2px solid #000;
     flex-direction: column;
-    overflow-x: auto; /* horizontal scroll if needed */
-    overflow-y: visible; /* allow vertical scroll of content inside */
+    overflow-x: auto; 
+    overflow-y: visible;
     padding: 10px;
   }
 
@@ -166,7 +191,7 @@ body {
     padding: 12px;
     gap: 12px;
     overflow-y: auto;
-    height: calc(100vh - 120px); /* sidebar + search approx */
+    height: calc(100vh - 120px); 
   }
 
   #gallery img {
