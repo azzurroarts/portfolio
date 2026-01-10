@@ -18,12 +18,11 @@ body {
   flex-direction: column;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto; /* independent vertical scroll */
-  flex-shrink: 0; /* prevent shrinking */
-  position: relative; /* for proper scroll */
+  overflow-y: auto; /* independent scroll */
+  flex-shrink: 0;
+  position: relative;
 }
 
-/* Sidebar buttons */
 #categories button {
   background: none;
   border: none;
@@ -45,7 +44,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
-  gap: 24px; /* spacing between images */
+  gap: 24px;
   overflow-y: auto; /* independent scroll */
   justify-content: flex-start;
   align-content: flex-start;
@@ -54,14 +53,44 @@ body {
 
 /* Gallery images */
 #gallery img {
-  width: 320px; /* bigger images */
-  height: auto; /* keep aspect ratio */
+  height: 450px; /* landscape height */
+  width: auto; /* maintain aspect ratio */
   object-fit: cover;
   cursor: pointer;
-  border: none; /* no borders */
-  transition: transform 0.2s;
+  transition: transform 0.25s ease, z-index 0.25s ease;
 }
 
 #gallery img:hover {
   transform: scale(1.05);
+}
+
+/* Fullscreen image overlay */
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: zoom-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.fullscreen-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fullscreen-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  transition: transform 0.25s ease;
 }
