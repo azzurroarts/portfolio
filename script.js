@@ -1,5 +1,5 @@
 // Replace this with your published Google Sheet link
-const publicSpreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6cZOwYKCqyw81uPCI4_KVnfnOTqT2UmVzVVP3fB8U2ocMkyEVg63dKN6-nmzqXnBwAyZzSn3Wo5L1/pubhtml';
+const publicSpreadsheetURL = 'https://docs.google.com/spreadsheets/d/2PACX-1vQ6cZOwYKCqyw81uPCI4_KVnfnOTqT2UmVzVVP3fB8U2ocMkyEVg63dKN6-nmzqXnBwAyZzSn3Wo5L1/gviz/tq?tqx=out:json';
 
 let artData = [];
 
