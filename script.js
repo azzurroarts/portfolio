@@ -1,49 +1,14 @@
-// script.js
+// Fullscreen overlay setup
+const overlay = document.createElement('div');
+overlay.className = 'fullscreen-overlay';
+document.body.appendChild(overlay);
 
-// CSV file in the same folder
-const csvFile = 'art.csv';
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+  overlay.innerHTML = ''; // remove the zoomed image
+});
 
-let artData = [];
-
-window.addEventListener('DOMContentLoaded', init);
-
-function init() {
-  fetch(csvFile)
-    .then(response => response.text())
-    .then(text => {
-      artData = csvToArray(text);
-      renderCategories();
-      renderGallery('All');
-    })
-    .catch(err => console.error('Error loading CSV:', err));
-}
-
-// Convert CSV text to array of objects
-function csvToArray(str, delimiter = ',') {
-  const lines = str.trim().split('\n');
-  const headers = lines[0].split(delimiter).map(h => h.trim());
-  return lines.slice(1).map(line => {
-    const values = line.split(delimiter).map(v => v.trim());
-    let obj = {};
-    headers.forEach((header, i) => {
-      obj[header] = values[i];
-    });
-    return obj;
-  });
-}
-
-function renderCategories() {
-  const categories = ['All', ...new Set(artData.map(a => a.Category))];
-  const sidebar = document.getElementById('categories');
-  sidebar.innerHTML = '';
-  categories.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.textContent = cat;
-    btn.addEventListener('click', () => renderGallery(cat));
-    sidebar.appendChild(btn);
-  });
-}
-
+// Add click event to images
 function renderGallery(filter) {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
@@ -53,6 +18,16 @@ function renderGallery(filter) {
       const img = document.createElement('img');
       img.src = a.URL;
       img.alt = a.Title;
+
+      // Fullscreen click behavior
+      img.addEventListener('click', () => {
+        const zoomImg = document.createElement('img');
+        zoomImg.src = img.src;
+        overlay.innerHTML = ''; // clear previous
+        overlay.appendChild(zoomImg);
+        overlay.classList.add('active');
+      });
+
       gallery.appendChild(img);
     });
 }
