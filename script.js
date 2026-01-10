@@ -1,13 +1,17 @@
 const csvFile = 'art.csv';
 let artData = [];
+let currentCategory = 'All';
 
 // Fullscreen overlay
 const overlay = document.createElement('div');
 overlay.className = 'fullscreen-overlay';
 document.body.appendChild(overlay);
 
+const floatingCategory = document.getElementById('floating-category');
+
 overlay.addEventListener('click', () => {
   overlay.classList.remove('active');
+  floatingCategory.style.opacity = 0;
   const img = overlay.querySelector('img');
   if (!img) return;
   const rect = img.dataset.originalRect && JSON.parse(img.dataset.originalRect);
@@ -47,6 +51,7 @@ function csvToArray(str, delimiter = ',') {
   });
 }
 
+// Render categories & active highlight
 function renderCategories() {
   const categories = ['All', ...new Set(artData.map(a => a.Category))];
   const catContainer = document.getElementById('categories');
@@ -55,11 +60,20 @@ function renderCategories() {
   categories.forEach(cat => {
     const btn = document.createElement('button');
     btn.textContent = cat;
-    btn.addEventListener('click', () => renderGallery(cat));
+
+    // highlight active category
+    if (cat === currentCategory) btn.classList.add('active');
+
+    btn.addEventListener('click', () => {
+      currentCategory = cat;
+      renderCategories(); // update highlight
+      renderGallery(cat);
+    });
     catContainer.appendChild(btn);
   });
 }
 
+// Render gallery
 function renderGallery(filter, searchQuery = '') {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
@@ -77,6 +91,13 @@ function renderGallery(filter, searchQuery = '') {
       img.style.transition = 'transform 0.25s ease';
 
       img.addEventListener('click', () => {
+        currentCategory = a.Category;
+        renderCategories(); // highlight category
+
+        // Show floating category label
+        floatingCategory.textContent = a.Category;
+        floatingCategory.style.opacity = 1;
+
         const zoomImg = document.createElement('img');
         zoomImg.src = img.src;
 
