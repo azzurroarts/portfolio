@@ -17,7 +17,7 @@ overlay.addEventListener('click', () => {
     img.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(${rect.width / img.naturalWidth}, ${rect.height / img.naturalHeight})`;
   }
 
-  setTimeout(() => overlay.innerHTML = '', 350); // remove after animation
+  setTimeout(() => overlay.innerHTML = '', 350);
 });
 
 window.addEventListener('DOMContentLoaded', init);
@@ -31,6 +31,13 @@ function init() {
       renderGallery('All');
     })
     .catch(err => console.error('Error loading CSV:', err));
+
+  // Sidebar search
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    renderGallery('All', query);
+  });
 }
 
 // CSV to array
@@ -45,12 +52,12 @@ function csvToArray(str, delimiter = ',') {
   });
 }
 
-// Sidebar
+// Render categories
 function renderCategories() {
   const categories = ['All', ...new Set(artData.map(a => a.Category))];
   const sidebar = document.getElementById('categories');
 
-  // Clear buttons except title
+  // Remove old buttons but keep title & search
   sidebar.querySelectorAll('button').forEach(b => b.remove());
 
   categories.forEach(cat => {
@@ -61,28 +68,31 @@ function renderCategories() {
   });
 }
 
-// Gallery
-function renderGallery(filter) {
+// Render gallery
+function renderGallery(filter, searchQuery = '') {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
 
   artData
     .filter(a => filter === 'All' || a.Category === filter)
+    .filter(a => a.Title.toLowerCase().includes(searchQuery))
     .forEach(a => {
       const img = document.createElement('img');
       img.src = a.URL;
       img.alt = a.Title;
+      img.style.height = '450px';
+      img.style.width = 'auto';
+      img.style.cursor = 'pointer';
+      img.style.transition = 'transform 0.25s ease';
 
-      // Hover zoom is in CSS
-      img.addEventListener('click', e => {
+      // Fullscreen click animation
+      img.addEventListener('click', () => {
         const zoomImg = document.createElement('img');
         zoomImg.src = img.src;
 
-        // Save original position for smooth animation
         const rect = img.getBoundingClientRect();
         zoomImg.dataset.originalRect = JSON.stringify(rect);
 
-        // Start animation from grid position
         zoomImg.style.position = 'fixed';
         zoomImg.style.left = rect.left + 'px';
         zoomImg.style.top = rect.top + 'px';
@@ -95,7 +105,6 @@ function renderGallery(filter) {
         overlay.appendChild(zoomImg);
         overlay.classList.add('active');
 
-        // Animate to center full screen
         requestAnimationFrame(() => {
           zoomImg.style.left = '50%';
           zoomImg.style.top = '50%';
