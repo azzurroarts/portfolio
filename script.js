@@ -8,15 +8,12 @@ document.body.appendChild(overlay);
 
 overlay.addEventListener('click', () => {
   overlay.classList.remove('active');
-
-  // Animate back to original grid position
   const img = overlay.querySelector('img');
   if (!img) return;
   const rect = img.dataset.originalRect && JSON.parse(img.dataset.originalRect);
   if (rect) {
     img.style.transform = `translate(${rect.left}px, ${rect.top}px) scale(${rect.width / img.naturalWidth}, ${rect.height / img.naturalHeight})`;
   }
-
   setTimeout(() => overlay.innerHTML = '', 350);
 });
 
@@ -32,7 +29,6 @@ function init() {
     })
     .catch(err => console.error('Error loading CSV:', err));
 
-  // Sidebar search
   const searchInput = document.getElementById('search');
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
@@ -55,16 +51,14 @@ function csvToArray(str, delimiter = ',') {
 // Render categories
 function renderCategories() {
   const categories = ['All', ...new Set(artData.map(a => a.Category))];
-  const sidebar = document.getElementById('categories');
-
-  // Remove old buttons but keep title & search
-  sidebar.querySelectorAll('button').forEach(b => b.remove());
+  const catContainer = document.getElementById('categories');
+  catContainer.innerHTML = ''; // clear previous buttons
 
   categories.forEach(cat => {
     const btn = document.createElement('button');
     btn.textContent = cat;
     btn.addEventListener('click', () => renderGallery(cat));
-    sidebar.appendChild(btn);
+    catContainer.appendChild(btn);
   });
 }
 
