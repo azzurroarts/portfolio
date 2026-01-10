@@ -1,3 +1,4 @@
+/* Reset & layout */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -8,6 +9,7 @@ body {
   overflow: hidden; /* prevent body scroll */
 }
 
+/* Sidebar */
 #categories {
   width: 220px;
   background: #fff;
@@ -23,9 +25,27 @@ body {
 .sidebar-title {
   font-weight: bold;
   font-size: 14px;
-  color: #888; /* slightly greyer */
-  margin-bottom: 16px;
+  color: #888; /* slightly grey */
+  margin-bottom: 12px;
   text-transform: uppercase;
+}
+
+#search-container {
+  margin-bottom: 20px;
+}
+
+#search {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 2px solid #000;
+  outline: none;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+#search:focus {
+  border-color: #555;
 }
 
 #categories button {
@@ -43,30 +63,25 @@ body {
   color: #555;
 }
 
+/* Gallery */
 #gallery {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
   gap: 24px;
-  overflow-y: auto; /* scroll independently */
+  overflow-y: auto; /* scroll only gallery */
   justify-content: flex-start;
   align-content: flex-start;
   box-sizing: border-box;
 }
 
-#gallery img {
-  height: 450px; /* landscape ratio */
-  width: auto;
-  object-fit: cover;
-  cursor: pointer;
+#gallery img:hover {
+  transform: scale(1.05);
   transition: transform 0.25s ease;
 }
 
-#gallery img:hover {
-  transform: scale(1.05);
-}
-
+/* Fullscreen overlay */
 .fullscreen-overlay {
   position: fixed;
   top: 0;
