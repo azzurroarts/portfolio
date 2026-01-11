@@ -154,7 +154,7 @@ body {
 }
 
 /* ---------------- MOBILE RESPONSIVE ---------------- */
-@media (max-width: 768px) {
+@media (max-width: 384px) {
   body {
     flex-direction: column;
     height: 100vh; 
