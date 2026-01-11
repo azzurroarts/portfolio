@@ -95,6 +95,14 @@ body {
   transition: transform 0.25s ease;
 }
 
+#gallery img {
+  height: 360px;
+  width: auto;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
 /* Fullscreen overlay */
 .fullscreen-overlay {
   position: fixed;
