@@ -203,6 +203,6 @@ body {
   }
 
   #gallery img {
-    height: 300px;
+    width: 300px;
   }
 }
