@@ -1,4 +1,4 @@
-/* Reset & layout */
+/* ---------------- RESET & LAYOUT ---------------- */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -6,9 +6,10 @@ body {
   color: #000;
   display: flex;
   height: 100vh;
+  overflow: hidden; /* allows internal scrolling */
 }
 
-/* Sidebar */
+/* ---------------- SIDEBAR ---------------- */
 #sidebar {
   width: 220px;
   background: #fff;
@@ -25,10 +26,17 @@ body {
   font-weight: bold;
   font-size: 14px;
   color: #888; 
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   text-transform: uppercase;
 }
 
+.sidebar-subtitle {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 16px;
+}
+
+/* ---------------- SEARCH ---------------- */
 #search-container {
   margin-bottom: 20px;
 }
@@ -47,6 +55,7 @@ body {
   border-color: #555;
 }
 
+/* ---------------- CATEGORIES ---------------- */
 #categories button {
   background: none;
   border: none;
@@ -62,22 +71,31 @@ body {
   color: #555;
 }
 
-/* NEW: active category highlight */
 #categories button.active {
+  background: #000;
   color: #fff;
-  background-color: #000;
   padding-left: 4px;
 }
 
-/* Main gallery container */
+/* ---------------- MAIN GALLERY ---------------- */
 #main {
   flex: 1;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
-/* Gallery */
+/* Desktop gallery images */
+@media (min-width: 769px) {
+  #gallery img {
+    height: 360px;
+    width: auto;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+  }
+}
+
+/* Gallery container */
 #gallery {
   flex: 1;
   display: flex;
@@ -85,7 +103,6 @@ body {
   padding: 20px;
   gap: 24px;
   overflow-y: auto;
-  justify-content: flex-start;
   align-content: flex-start;
   box-sizing: border-box;
 }
@@ -95,21 +112,10 @@ body {
   transition: transform 0.25s ease;
 }
 
-#gallery img {
-  height: 360px;
-  width: auto;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-
-/* Fullscreen overlay */
+/* ---------------- FULLSCREEN OVERLAY ---------------- */
 .fullscreen-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: rgba(0,0,0,0.9);
   display: flex;
   justify-content: center;
@@ -135,7 +141,7 @@ body {
   will-change: transform;
 }
 
-/* NEW: floating category label at bottom */
+/* ---------------- FLOATING CATEGORY LABEL ---------------- */
 #floating-category {
   position: fixed;
   bottom: 20px;
@@ -144,8 +150,8 @@ body {
   font-weight: bold;
   font-size: 20px;
   color: #fff;
-  background: rgba(0,0,0,0.6);
-  padding: 6px 12px;
+  background: rgba(0,0,0,0.65);
+  padding: 6px 14px;
   border-radius: 4px;
   opacity: 0;
   pointer-events: none;
@@ -154,30 +160,29 @@ body {
 }
 
 /* ---------------- MOBILE RESPONSIVE ---------------- */
-@media (max-width: 384px) {
+@media (max-width: 768px) {
   body {
     flex-direction: column;
-    height: 100vh; 
   }
 
   #sidebar {
     width: 100%;
     border-right: none;
     border-bottom: 2px solid #000;
-    flex-direction: column;
-    overflow-x: auto; 
+    padding: 12px;
+    overflow-x: auto;
     overflow-y: visible;
-    padding: 10px;
+    flex-direction: column;
   }
 
-  #sidebar #categories {
+  #categories {
     display: flex;
-    flex-wrap: nowrap;
     gap: 12px;
     overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
-  #sidebar #categories button {
+  #categories button {
     flex-shrink: 0;
     white-space: nowrap;
     font-size: 14px;
@@ -199,10 +204,11 @@ body {
     padding: 12px;
     gap: 12px;
     overflow-y: auto;
-    height: calc(100vh - 120px); 
+    height: calc(100vh - 120px);
   }
 
   #gallery img {
-    width: 300px;
+    height: 300px;
+    width: auto;
   }
 }
